@@ -10,7 +10,7 @@ package com.mycompany.proyectolenguajes;
  */
 public class ProyectoLenguajes {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println("Hello World!");
-    }
+    }*/
 }

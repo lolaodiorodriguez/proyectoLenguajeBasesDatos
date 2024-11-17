@@ -8,9 +8,9 @@ import javax.swing.JOptionPane;
 
 public class conexiones {
     private final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-    private final String URL = "jdbc:oracle:thin:@//localhost:1521/orcl";
-    private final String USER = "UsuarioPruebas";
-    private final String PASWORD = "Usuario1";
+    private final String URL = "jdbc:oracle:thin:@//localhost:1522/orcl";
+    private final String USER = "proyecto";
+    private final String PASWORD = "1234";
 
     public Connection cadena;
 
