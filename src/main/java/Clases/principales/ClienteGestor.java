@@ -12,7 +12,6 @@ public class ClienteGestor extends JFrame {
     private JTextField txtCodigo, txtNombre, txtApellido, txtApellido2, txtTelefono, txtDireccion, txtEmail;
     private JButton btnRegistrar, btnModificar, btnCargar;
 
-    // Conexión a la base de datos
     private Connection conexion;
 
     public ClienteGestor() {
@@ -21,17 +20,13 @@ public class ClienteGestor extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
 
-        // Establecer conexión a la base de datos
         conectarBaseDatos();
 
-        // Panel Principal
         JPanel panelPrincipal = new JPanel(new BorderLayout());
 
-        // Panel de Formulario
         JPanel panelFormulario = new JPanel(new GridLayout(8, 2, 10, 10));
         panelFormulario.setBorder(BorderFactory.createTitledBorder("Datos del Cliente"));
 
-        // Panel de Formulario
         panelFormulario.add(new JLabel("Código:"));
         txtCodigo = new JTextField();
         panelFormulario.add(txtCodigo);
@@ -45,7 +40,7 @@ public class ClienteGestor extends JFrame {
         panelFormulario.add(txtApellido);
 
         panelFormulario.add(new JLabel("Apellido 2:"));
-        txtApellido2 = new JTextField();  // Nuevo campo para apellido2
+        txtApellido2 = new JTextField();
         panelFormulario.add(txtApellido2);
 
         panelFormulario.add(new JLabel("Teléfono:"));
@@ -57,7 +52,7 @@ public class ClienteGestor extends JFrame {
         panelFormulario.add(txtEmail);
 
         panelFormulario.add(new JLabel("Dirección:"));
-        txtDireccion = new JTextField();  // Nuevo campo para dirección
+        txtDireccion = new JTextField();
         panelFormulario.add(txtDireccion);
 
         btnRegistrar = new JButton("Registrar");
@@ -73,19 +68,16 @@ public class ClienteGestor extends JFrame {
 
         panelPrincipal.add(panelFormulario, BorderLayout.NORTH);
 
-        // Tabla para visualizar clientes
         String[] columnas = {"ID Cliente", "Nombre", "Apellido", "Teléfono", "Email"};
         Object[][] datos = {};
         tableClientes = new JTable(datos, columnas);
         JScrollPane scrollPane = new JScrollPane(tableClientes);
         panelPrincipal.add(scrollPane, BorderLayout.CENTER);
 
-        // Botón cargar datos
         panelPrincipal.add(btnCargar, BorderLayout.SOUTH);
 
         add(panelPrincipal);
 
-        // Eventos de botones
         btnRegistrar.addActionListener(e -> registrarCliente());
         btnModificar.addActionListener(e -> modificarCliente());
         btnCargar.addActionListener(e -> cargarClientes());
@@ -93,7 +85,7 @@ public class ClienteGestor extends JFrame {
 
     private void conectarBaseDatos() {
         try {
-            String url = "jdbc:oracle:thin:@localhost:1521:orcl"; // Cambia según tu configuración
+            String url = "jdbc:oracle:thin:@localhost:1521:orcl";
             String user = "C##NEL";
             String password = "123456";
 
@@ -110,16 +102,16 @@ public class ClienteGestor extends JFrame {
             String sql = "INSERT INTO cliente (id_cliente, nombre, apellido1, apellido2, email, telefono, direccion) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conexion.prepareStatement(sql);
 
-            // Asignamos los valores a los parámetros
-            stmt.setInt(1, Integer.parseInt(txtCodigo.getText()));  // id_cliente
-            stmt.setString(2, txtNombre.getText());                 // nombre
-            stmt.setString(3, txtApellido.getText());               // apellido1
-            stmt.setString(4, txtApellido2.getText());              // apellido2
-            stmt.setString(5, txtEmail.getText());                  // email
-            stmt.setString(6, txtTelefono.getText());               // telefono
-            stmt.setString(7, txtDireccion.getText());              // direccion
+           
+            stmt.setInt(1, Integer.parseInt(txtCodigo.getText()));  
+            stmt.setString(2, txtNombre.getText());                 
+            stmt.setString(3, txtApellido.getText());               
+            stmt.setString(4, txtApellido2.getText());              
+            stmt.setString(5, txtEmail.getText());                  
+            stmt.setString(6, txtTelefono.getText());               
+            stmt.setString(7, txtDireccion.getText());              
 
-            // Ejecutamos la consulta de inserción
+         
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas > 0) {
                 JOptionPane.showMessageDialog(this, "Cliente registrado exitosamente.");
@@ -133,28 +125,28 @@ public class ClienteGestor extends JFrame {
 
     private void cargarClientes() {
         try {
-            String sql = "SELECT * FROM cliente";  // Consulta para obtener todos los clientes
+            String sql = "SELECT * FROM cliente";
             PreparedStatement stmt = conexion.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
-            // Limpiar la tabla antes de cargar los nuevos datos
+            
             DefaultTableModel model = new DefaultTableModel(new String[]{"ID Cliente", "Nombre", "Apellido1", "Apellido2", "Teléfono", "Email", "Dirección"}, 0);
 
-            // Llenar la tabla con los datos de la base de datos
+            
             while (rs.next()) {
                 Object[] row = {
-                    rs.getInt("id_cliente"), // id_cliente
-                    rs.getString("nombre"), // nombre
-                    rs.getString("apellido1"), // apellido1
-                    rs.getString("apellido2"), // apellido2
-                    rs.getString("telefono"), // telefono
-                    rs.getString("email"), // email
-                    rs.getString("direccion") // direccion
+                    rs.getInt("id_cliente"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido1"),
+                    rs.getString("apellido2"),
+                    rs.getString("telefono"), 
+                    rs.getString("email"), 
+                    rs.getString("direccion") 
                 };
                 model.addRow(row);
             }
 
-            // Establecer el modelo de la tabla con los datos obtenidos
+            
             tableClientes.setModel(model);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,11 +158,10 @@ public class ClienteGestor extends JFrame {
         int selectedRow = tableClientes.getSelectedRow();
         if (selectedRow != -1) {
             try {
-                int idCliente = (int) tableClientes.getValueAt(selectedRow, 0);  // Obtener id_cliente de la fila seleccionada
+                int idCliente = (int) tableClientes.getValueAt(selectedRow, 0);  
                 String sql = "UPDATE cliente SET nombre = ?, apellido1 = ?, apellido2 = ?, telefono = ?, email = ?, direccion = ? WHERE id_cliente = ?";
                 PreparedStatement stmt = conexion.prepareStatement(sql);
 
-                // Asignamos los nuevos valores desde los campos del formulario
                 stmt.setString(1, txtNombre.getText());
                 stmt.setString(2, txtApellido.getText());
                 stmt.setString(3, txtApellido2.getText());
@@ -179,7 +170,7 @@ public class ClienteGestor extends JFrame {
                 stmt.setString(6, txtDireccion.getText());
                 stmt.setInt(7, idCliente);
 
-                // Ejecutamos la consulta de actualización
+               
                 int filasAfectadas = stmt.executeUpdate();
                 if (filasAfectadas > 0) {
                     JOptionPane.showMessageDialog(this, "Cliente modificado exitosamente.");

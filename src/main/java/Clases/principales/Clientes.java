@@ -1,6 +1,4 @@
-//COMENTARIO PRUEBA
 package Clases.principales;
-
 
 public class Clientes {
     
