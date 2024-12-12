@@ -48,14 +48,14 @@ public class ReservaDAO {
         return reservas;
     }
 
-    public void crearReserva(Reserva reserva, int idCliente) {
+    public void crearReserva(Reserva reserva, int idCliente,int id) {
         String query = "INSERT INTO reserva (id_reserva, id_cliente, id_hotel, fecha_inicio, fecha_fin, estado_reserva, id_habitacion) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, reserva.getIdReserva());
+            stmt.setInt(1, id);
             stmt.setInt(2, idCliente);
-            stmt.setInt(3, reserva.getIdHabitacion());
+            stmt.setInt(3, reserva.getIdCliente());
             stmt.setDate(4, new java.sql.Date(reserva.getFechaInicio().getTime()));
             stmt.setDate(5, new java.sql.Date(reserva.getFechaFin().getTime()));
             stmt.setString(6, reserva.getEstadoReserva());

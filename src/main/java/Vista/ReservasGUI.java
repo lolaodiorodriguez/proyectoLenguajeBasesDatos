@@ -244,7 +244,7 @@ this.dispose();
         String idhabitacion=JOptionPane.showInputDialog(null, "Escribe ID del Habitacion:");
         String fechainicio=JOptionPane.showInputDialog(null, "Escribe Fecha que inicio su Reserva(YYYY-MM-DD):");
         String fechafinal=JOptionPane.showInputDialog(null, "Escribe Fecha que Fin su Reserva(YYYY-MM-DD):");
-        String estado_de_reserva=JOptionPane.showInputDialog(null, "Escribe ID del Habitacion:");
+        String estado_de_reserva=JOptionPane.showInputDialog(null, "Escribe el Estado de La Reservacion\n Confirmada\nPendiente\nCancelada:");
         
         try {
             modificarReservaEnBD(idcodigo,idcliente,idhotel,idhabitacion,fechainicio,fechafinal,estado_de_reserva);

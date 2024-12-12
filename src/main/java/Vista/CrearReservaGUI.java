@@ -157,12 +157,13 @@ public class CrearReservaGUI extends JFrame {
             java.util.Date fechaFinUtil = formatoFecha.parse(fechaFin);
             Date sqlFechaInicio = new Date(fechaInicioUtil.getTime());
             Date sqlFechaFin = new Date(fechaFinUtil.getTime());
-
+            
+            int ids=Integer.parseInt(JOptionPane.showInputDialog(null,"Escribe el Codigo de Reserva:"));
+            
             // Crear el objeto Reserva
-            Reserva reserva = new Reserva(idCliente, idHotel, Integer.parseInt(habitacion), sqlFechaInicio, sqlFechaFin, estado);
-
+            Reserva reserva = new Reserva(ids, idHotel, Integer.parseInt(habitacion), sqlFechaInicio, sqlFechaFin, estado);
             // Guardar en la base de datos
-            reservaDAO.crearReserva(reserva, idCliente);
+            reservaDAO.crearReserva(reserva, idCliente,ids);
             JOptionPane.showMessageDialog(this, "Reserva creada exitosamente.");
             dispose(); // Cerrar la ventana actual
         } catch (SQLException e) {
